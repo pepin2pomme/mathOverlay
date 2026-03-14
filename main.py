@@ -58,7 +58,7 @@ class MathOverlay(QWidget):
         painter.setPen(pen)
 
         x, y, w, h = self.target_rect   # On récup les coordonnées du rectangle à dessiner
-        pâinter.drawRect(x,y,w,h)       # On le dessine
+        painter.drawRect(x,y,w,h)       # On le dessine
         painter.drawText(x + w + 10, y + (h // 2), f"Solution: {self.solution_text}") # On dessine la solution de l'equation à l'interieur
 
 
