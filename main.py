@@ -16,7 +16,7 @@ class MathOverlay(QWidget):
         self.target_rect = None  # Contiendra (x, y, w, h) de l'élément à entourer
         self.solution_text = ""  # Contiendra le résultat de l'équation
 
-        self.target_rect = (200, 200, 300, 60)
+        self.target_rect = (200, 200, 100, 20)
         self.solution_text = "x = 5"
     
     def initUI(self):
@@ -59,6 +59,11 @@ class MathOverlay(QWidget):
 
         x, y, w, h = self.target_rect   # On récup les coordonnées du rectangle à dessiner
         painter.drawRect(x,y,w,h)       # On le dessine
+
+        # On config la taille du texte de la solution en fonction de la "taille" de l'équation à l'écran
+        font = painter.font()
+        font.setPixelSize(int(h * 0.8)) 
+        painter.setFont(font)
         painter.drawText(x + w + 10, y + (h // 2), f"Solution: {self.solution_text}") # On dessine la solution de l'equation à l'interieur
 
 
