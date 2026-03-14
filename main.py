@@ -12,6 +12,12 @@ class MathOverlay(QWidget):
         super().__init__()
         self.initUI()
         self.setup_tray_icon()
+
+        self.target_rect = None  # Contiendra (x, y, w, h) de l'élément à entourer
+        self.solution_text = ""  # Contiendra le résultat de l'équation
+
+        self.target_rect = (200, 200, 300, 60)
+        self.solution_text = "x = 5"
     
     def initUI(self):
         # Rendre l'overlay transparent
@@ -38,6 +44,25 @@ class MathOverlay(QWidget):
 
         self.tray_icon.setContextMenu(tray_menu)
         self.tray_icon.show()
+
+    def paintEvent(self, event):
+        # S'il n'y a rien à entourer, on n'entoure rien
+        if self.target_rect is None: 
+            return
+        
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing) # Traits lisses
+
+        # Config du pinceau rouge
+        pen = QPen(QColor(255, 0, 0), 3)
+        painter.setPen(pen)
+
+        x, y, w, h = self.target_rect   # On récup les coordonnées du rectangle à dessiner
+        pâinter.drawRect(x,y,w,h)       # On le dessine
+        painter.drawText(x + w + 10, y + (h // 2), f"Solution: {self.solution_text}") # On dessine la solution de l'equation à l'interieur
+
+
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
